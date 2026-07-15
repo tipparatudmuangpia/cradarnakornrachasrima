@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C-RADAR · Spatio-Aging Healthcare Atlas · Nakhon Ratchasima Province</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #F6F2E9;
+  --paper-2: #EDE6D6;
+  --ink: #1F1B17;
+  --ink-soft: #4A4039;
+  --ink-mute: #7A6F65;
+  --rule: #C9BFAE;
+  --rule-soft: #DDD3BF;
+  --accent-risk: #B8442C;
+  --accent-risk-soft: #D4775F;
+  --accent-warm: #C28A2C;
+  --accent-mid: #8A7A3A;
+  --accent-good: #3D5C3A;
+  --accent-good-soft: #6B8A5C;
+  --accent-deep: #2E3B2D;
+  --accent-ink: #2A2520;
+  --shadow-warm: 0 1px 0 rgba(31, 27, 23, 0.04), 0 4px 18px -8px rgba(31, 27, 23, 0.18);
+  --shadow-deep: 0 2px 0 rgba(31, 27, 23, 0.06), 0 18px 40px -20px rgba(31, 27, 23, 0.28);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Sarabun', 'Noto Serif Thai', serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(184, 68, 44, 0.04) 0%, transparent 38%),
+    radial-gradient(circle at 88% 92%, rgba(61, 92, 58, 0.05) 0%, transparent 42%),
+    repeating-linear-gradient(0deg, transparent 0, transparent 32px, rgba(31, 27, 23, 0.012) 32px, rgba(31, 27, 23, 0.012) 33px);
+  min-height: 100vh;
+  padding: 32px 28px 80px;
+}
+
+.serif { font-family: 'Fraunces', 'Noto Serif Thai', serif; }
+.thai-display { font-family: 'Noto Serif Thai', 'Fraunces', serif; font-weight: 600; }
+.mono { font-family: 'JetBrains Mono', monospace; font-feature-settings: "tnum"; }
+
+.wrap { max-width: 1480px; margin: 0 auto; }
+
+/* ─── MASTHEAD ───────────────────────────────────────────── */
+.masthead {
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 14px 0 20px;
+  margin-bottom: 32px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 32px;
+  align-items: end;
+}
+
+.masthead .vol {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  border-left: 2px solid var(--accent-risk);
+  padding-left: 10px;
+  align-self: end;
+  padding-bottom: 4px;
+}
+
+.masthead .title-block { text-align: center; }
+
+.masthead .eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.masthead h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(38px, 5vw, 64px);
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  font-variation-settings: "opsz" 144;
+}
+
+.masthead h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent-risk);
+}
+
+.masthead .subtitle {
+  font-family: 'Noto Serif Thai', serif;
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-top: 8px;
+  letter-spacing: 0.005em;
+}
+
+.masthead .date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  text-align: right;
+  align-self: end;
+  padding-bottom: 4px;
+}
+
+.masthead .date strong { color: var(--ink); font-weight: 500; }
+
+/* ─── PROLOGUE ───────────────────────────────────────────── */
+.prologue {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 56px;
+  padding-bottom: 36px;
+  margin-bottom: 36px;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+
+.prologue h2 {
+  font-family: 'Noto Serif Thai', serif;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+
+.prologue h2 .accent {
+  color: var(--accent-risk);
+  font-style: italic;
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+}
+
+.prologue .lede {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 16.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.prologue .lede p + p { margin-top: 14px; }
+
+.prologue .lede .dropcap {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 0.8;
+  float: left;
+  margin: 4px 8px -2px 0;
+  color: var(--accent-risk);
+}
+
+/* ─── DIMENSION KEY ──────────────────────────────────────── */
+.dim-key {
+  margin-bottom: 36px;
+  padding: 22px 26px;
+  background: linear-gradient(180deg, var(--paper-2) 0%, transparent 100%);
+  border: 1px solid var(--rule-soft);
+  border-radius: 2px;
+  position: relative;
+}
+
+.dim-key::before {
+  content: "C—RADAR";
+  position: absolute;
+  top: -8px;
+  left: 18px;
+  background: var(--paper);
+  padding: 0 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  color: var(--ink-mute);
+}
+
+.dim-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+}
+
+.dim { position: relative; padding-left: 14px; }
+
+.dim::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 4px; bottom: 4px;
+  width: 3px;
+  background: var(--dim-color, var(--accent-risk));
+}
+
+.dim .letter {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 38px;
+  line-height: 1;
+  color: var(--dim-color);
+  font-style: italic;
+}
+
+.dim .name-en {
+  font-family: 'Fraunces', serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-top: 4px;
+  letter-spacing: -0.005em;
+}
+
+.dim .name-th {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.dim .indicators {
+  font-family: 'Sarabun', sans-serif;
+  font-size: 11.5px;
+  color: var(--ink-mute);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* ─── KPI STRIP ──────────────────────────────────────────── */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  margin-bottom: 36px;
+}
+
+.kpi {
+  padding: 18px 20px;
+  border-right: 1px solid var(--rule);
+  position: relative;
+}
+
+.kpi:last-child { border-right: none; }
+
+.kpi .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.kpi .value {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.kpi .unit {
+  font-family: 'Sarabun', sans-serif;
+  font-size: 13px;
+  color: var(--ink-mute);
+  margin-left: 4px;
+}
+
+.kpi .delta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  margin-top: 8px;
+  color: var(--ink-soft);
+}
+
+.kpi .delta.warn { color: var(--accent-risk); }
+.kpi .delta.good { color: var(--accent-good); }
+
+/* ─── MAIN GRID ──────────────────────────────────────────── */
+.atlas {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 28px;
+  margin-bottom: 36px;
+}
+
+.panel {
+  background: var(--paper);
+  border: 1px solid var(--rule-soft);
+  border-radius: 2px;
+  padding: 22px 24px 24px;
+  box-shadow: var(--shadow-warm);
+  position: relative;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.panel-head h3 {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+
+.panel-head h3 .figno {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  margin-right: 10px;
+  font-weight: 400;
+}
+
+.panel-head .meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: var(--ink-mute);
+  letter-spacing: 0.04em;
+}
+
+/* ─── DIMENSION SWITCHER ─────────────────────────────────── */
+.dim-switcher {
+  display: flex;
+  gap: 0;
+  margin-bottom: 16px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  overflow: hidden;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+}
+
+.dim-switcher button {
+  flex: 1;
+  background: var(--paper);
+  border: none;
+  border-right: 1px solid var(--rule);
+  padding: 9px 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--ink-soft);
+  letter-spacing: 0.06em;
+  transition: all 0.18s ease;
+  text-transform: uppercase;
+}
+
+.dim-switcher button:last-child { border-right: none; }
+.dim-switcher button:hover { background: var(--paper-2); color: var(--ink); }
+.dim-switcher button.active { background: var(--ink); color: var(--paper); }
+
+.dim-switcher button .ltr {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 14px;
+  font-weight: 400;
+  margin-right: 4px;
+}
+
+/* ─── MAP ────────────────────────────────────────────────── */
+.map-stage {
+  position: relative;
+  background: linear-gradient(135deg, #F8F3E5 0%, #F0E9D5 100%);
+  border: 1px solid var(--rule-soft);
+  border-radius: 2px;
+  padding: 12px;
+  aspect-ratio: 1 / 0.92;
+  overflow: hidden;
+}
+
+.map-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0, transparent 40px, rgba(31, 27, 23, 0.03) 40px, rgba(31, 27, 23, 0.03) 41px),
+    repeating-linear-gradient(90deg, transparent 0, transparent 40px, rgba(31, 27, 23, 0.03) 40px, rgba(31, 27, 23, 0.03) 41px);
+  pointer-events: none;
+}
+
+.map-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.amphoe-node { cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.amphoe-node circle.fill {
+  stroke: var(--ink);
+  stroke-width: 1;
+  transition: all 0.25s ease;
+}
+
+.amphoe-node:hover circle.fill,
+.amphoe-node.selected circle.fill {
+  stroke-width: 2.5;
+  stroke: var(--ink);
+  filter: drop-shadow(0 4px 8px rgba(31, 27, 23, 0.28));
+}
+
+.amphoe-node text {
+  font-family: 'Sarabun', sans-serif;
+  font-size: 8.5px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+  pointer-events: none;
+  font-weight: 500;
+}
+
+.amphoe-node.selected text { fill: var(--ink); font-weight: 700; }
+
+.amphoe-node text.label-bg {
+  stroke: var(--paper);
+  stroke-width: 2.6;
+  paint-order: stroke;
+}
+
+.map-legend {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  background: rgba(246, 242, 233, 0.94);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--rule);
+  padding: 10px 14px;
+  border-radius: 2px;
+  z-index: 2;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+}
+
+.map-legend .lg-title {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ink-mute);
+  margin-bottom: 8px;
+}
+
+.legend-bar { display: flex; width: 180px; height: 8px; margin-bottom: 4px; }
+.legend-bar div { flex: 1; }
+
+.legend-ticks {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-mute);
+  font-size: 9.5px;
+}
+
+.map-compass {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  z-index: 2;
+  opacity: 0.5;
+}
+
+.map-scale {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  z-index: 2;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: var(--ink-mute);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.scale-bar {
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--ink) 0%, var(--ink) 50%, var(--paper) 50%, var(--paper) 100%);
+  border: 1px solid var(--ink);
+}
+
+/* ─── DETAIL PANEL ───────────────────────────────────────── */
+.detail-stack { display: flex; flex-direction: column; gap: 22px; }
+
+.amphoe-card {
+  border: 1px solid var(--rule-soft);
+  background: var(--paper);
+  padding: 20px 22px;
+  border-radius: 2px;
+}
+
+.amphoe-card .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.amphoe-card .name {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  line-height: 1.05;
+}
+
+.amphoe-card .name-en {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ink-mute);
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+.amphoe-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.amphoe-stat .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+}
+
+.amphoe-stat .val {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-top: 2px;
+  letter-spacing: -0.01em;
+}
+
+.amphoe-stat .val .small {
+  font-family: 'Sarabun', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--ink-mute);
+  margin-left: 2px;
+}
+
+/* ─── RADAR CHART ────────────────────────────────────────── */
+.radar-stage {
+  background: linear-gradient(180deg, #F8F4E8 0%, #F2EBD8 100%);
+  border: 1px solid var(--rule-soft);
+  padding: 16px;
+  position: relative;
+  aspect-ratio: 1 / 1;
+}
+
+.radar-svg { width: 100%; height: 100%; display: block; }
+
+.radar-grid line, .radar-grid polygon {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 0.5;
+}
+
+.radar-grid polygon.outer {
+  stroke: var(--ink-mute);
+  stroke-width: 1;
+  fill: rgba(246, 242, 233, 0.4);
+}
+
+.radar-data {
+  fill: rgba(184, 68, 44, 0.14);
+  stroke: var(--accent-risk);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.radar-data-compare {
+  fill: rgba(61, 92, 58, 0.08);
+  stroke: var(--accent-good);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+}
+
+.radar-point {
+  fill: var(--accent-risk);
+  stroke: var(--paper);
+  stroke-width: 1.5;
+  transition: all 0.3s ease;
+}
+
+.radar-label {
+  font-family: 'Fraunces', serif;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.radar-label-th {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 10.5px;
+  fill: var(--ink-mute);
+  font-weight: 500;
+}
+
+.radar-tick {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  fill: var(--ink-mute);
+}
+
+.radar-pattern-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--rule);
+}
+
+.radar-pattern-tag strong {
+  color: var(--accent-risk);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  font-size: 13px;
+  display: block;
+  font-family: 'Noto Serif Thai', serif;
+  margin-top: 4px;
+}
+
+/* ─── ANALYSIS GRID ──────────────────────────────────────── */
+.analysis-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 28px;
+  margin-bottom: 36px;
+}
+
+.rank-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+.rank-table thead th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  text-align: left;
+  padding: 8px 8px 10px;
+  border-bottom: 2px solid var(--ink);
+  font-weight: 400;
+}
+
+.rank-table thead th.num { text-align: right; }
+
+.rank-table tbody tr {
+  border-bottom: 1px solid var(--rule-soft);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.rank-table tbody tr:hover { background: var(--paper-2); }
+.rank-table tbody tr.selected { background: rgba(184, 68, 44, 0.06); }
+
+.rank-table tbody td { padding: 9px 8px; vertical-align: middle; }
+
+.rank-table td.rank {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  color: var(--ink-mute);
+  width: 32px;
+}
+
+.rank-table td.name-cell {
+  font-family: 'Noto Serif Thai', serif;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.rank-table td.num {
+  font-family: 'JetBrains Mono', monospace;
+  text-align: right;
+  color: var(--ink-soft);
+}
+
+.bar-cell { width: 90px; }
+
+.mini-bar {
+  height: 6px;
+  background: var(--rule-soft);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.mini-bar .fill { height: 100%; transition: width 0.4s ease; }
+
+.tier-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 1px;
+  font-weight: 500;
+}
+
+.tier-pill.critical { background: rgba(184, 68, 44, 0.16); color: var(--accent-risk); }
+.tier-pill.high { background: rgba(194, 138, 44, 0.16); color: #946716; }
+.tier-pill.moderate { background: rgba(138, 122, 58, 0.14); color: var(--accent-mid); }
+.tier-pill.low { background: rgba(61, 92, 58, 0.14); color: var(--accent-good); }
+
+.rank-scroll { max-height: 620px; overflow-y: auto; }
+.rank-scroll::-webkit-scrollbar { width: 6px; }
+.rank-scroll::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+
+.archetype-list { display: flex; flex-direction: column; gap: 14px; }
+
+.archetype {
+  border-left: 3px solid var(--arch-color, var(--accent-risk));
+  padding: 12px 16px 12px 18px;
+  background: linear-gradient(90deg, rgba(0,0,0,0.015), transparent);
+}
+
+.archetype .arch-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.archetype .arch-name {
+  font-family: 'Noto Serif Thai', serif;
+  font-weight: 600;
+  font-size: 15.5px;
+  color: var(--ink);
+}
+
+.archetype .arch-name-en {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-mute);
+}
+
+.archetype .arch-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-mute);
+}
+
+.archetype .arch-desc {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-top: 4px;
+}
+
+.archetype .arch-intervention {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  color: var(--arch-color, var(--accent-risk));
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+
+/* ─── RESEARCH PATHWAYS ──────────────────────────────────── */
+.research-section {
+  border-top: 2px solid var(--ink);
+  padding-top: 32px;
+  margin-top: 12px;
+}
+
+.research-section h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 36px;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  font-variation-settings: "opsz" 144;
+}
+
+.research-section h2 em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent-risk);
+}
+
+.research-section .deck {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 15.5px;
+  color: var(--ink-soft);
+  max-width: 720px;
+  margin-bottom: 28px;
+  line-height: 1.65;
+}
+
+.pathways {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.pathway {
+  padding: 20px 22px 24px;
+  border-right: 1px solid var(--rule-soft);
+  position: relative;
+}
+
+.pathway:last-child { border-right: none; }
+
+.pathway .num {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 56px;
+  line-height: 0.9;
+  color: var(--accent-risk);
+  opacity: 0.85;
+}
+
+.pathway .pw-title {
+  font-family: 'Noto Serif Thai', serif;
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--ink);
+  margin-top: 8px;
+  line-height: 1.3;
+}
+
+.pathway .pw-method {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.pathway .pw-body {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-top: 10px;
+}
+
+.pathway .pw-funder {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--accent-good);
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--rule);
+}
+
+/* ─── COLOPHON ───────────────────────────────────────────── */
+.colophon {
+  margin-top: 48px;
+  padding: 22px 0 0;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 36px;
+  font-size: 12.5px;
+  color: var(--ink-mute);
+  font-family: 'Noto Serif Thai', serif;
+}
+
+.colophon h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--ink);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.colophon p { line-height: 1.6; }
+.colophon p + p { margin-top: 6px; }
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .prologue { grid-template-columns: 1fr; gap: 24px; }
+  .dim-grid { grid-template-columns: repeat(3, 1fr); }
+  .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  .kpi { border-bottom: 1px solid var(--rule); }
+  .atlas, .analysis-grid { grid-template-columns: 1fr; }
+  .pathways { grid-template-columns: 1fr 1fr; }
+  .masthead { grid-template-columns: 1fr; gap: 12px; text-align: center; }
+  .masthead .vol, .masthead .date { text-align: center; border-left: none; padding-left: 0; }
+}
+
+@media (max-width: 640px) {
+  body { padding: 20px 16px 60px; }
+  .dim-grid { grid-template-columns: 1fr 1fr; }
+  .pathways { grid-template-columns: 1fr; }
+  .colophon { grid-template-columns: 1fr; }
+  .amphoe-stats { grid-template-columns: 1fr 1fr; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in { animation: fadeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="vol">VOL. I &nbsp;·&nbsp; № 03</div>
+  <div class="title-block">
+    <div class="eyebrow">A Spatio-Aging Healthcare Atlas</div>
+    <h1>C—<em>RADAR</em></h1>
+    <div class="subtitle">เครื่องมือเชิงพื้นที่ระดับอำเภอ เพื่อออกแบบบริการสุขภาพและสังคมที่เหมาะกับบริบทผู้สูงวัยไทย</div>
+  </div>
+  <div class="date">PROTOTYPE<br><strong>NAKHON RATCHASIMA</strong></div>
+</header>
+
+<!-- PROLOGUE -->
+<section class="prologue">
+  <div>
+    <h2>เมื่อ "แผนที่ผู้สูงอายุ"<br>ระดับจังหวัดใหญ่ที่สุด<br>ต้องการ<span class="accent">profile เชิงพื้นที่</span></h2>
+  </div>
+  <div class="lede">
+    <p><span class="dropcap">น</span>ครราชสีมาเป็นจังหวัดที่มี <em>32 อำเภอ</em> มากที่สุดในประเทศไทย ครอบคลุมพื้นที่กว้างใหญ่ตั้งแต่เขตเมืองใหญ่ อำเภอท่องเที่ยวเชิงเขา ไปจนถึงชนบทเกษตรกรรมชายขอบ ความหลากหลายเชิงพื้นที่นี้ทำให้การจัดสรรทรัพยากรผู้สูงอายุแบบ "ค่าเฉลี่ยจังหวัด" ยิ่งพลาดเป้า — อำเภอปากช่องที่เป็นเมืองท่องเที่ยว มีปัญหาคนละชนิดกับอำเภอลำทะเมนชัยที่เป็นชนบทห่างไกล</p>
+    <p><strong>C-RADAR</strong> อ่านแต่ละอำเภอเป็น <em>signature</em> 6 มิติ ที่บอกทั้ง "เปราะบางแค่ไหน" และ "เปราะบางแบบใด" ทำให้ผู้บริหารระดับจังหวัดและ อปท. เห็นภาพว่าอำเภอใดต้องการ intervention รูปแบบใด — เป็นฐานสำหรับการวางแผนที่สะท้อนความจริงเชิงพื้นที่ ไม่ใช่นโยบายตัดเสื้อโหลทั้งจังหวัด</p>
+  </div>
+</section>
+
+<!-- DIMENSION KEY -->
+<section class="dim-key">
+  <div class="dim-grid">
+    <div class="dim" style="--dim-color: #B8442C;">
+      <div class="letter">C</div>
+      <div class="name-en">Community Vitality</div>
+      <div class="name-th">ชีวิตชีวาของชุมชน</div>
+      <div class="indicators">ชมรมผู้สูงอายุ · social participation · intergenerational ties</div>
+    </div>
+    <div class="dim" style="--dim-color: #C28A2C;">
+      <div class="letter">R</div>
+      <div class="name-en">Risk Burden</div>
+      <div class="name-th">ภาระความเสี่ยง</div>
+      <div class="indicators">frailty · NCDs · falls · depression</div>
+    </div>
+    <div class="dim" style="--dim-color: #8A7A3A;">
+      <div class="letter">A</div>
+      <div class="name-en">Access to Care</div>
+      <div class="name-th">การเข้าถึงบริการ</div>
+      <div class="indicators">distance · อสม.density · transport · telehealth</div>
+    </div>
+    <div class="dim" style="--dim-color: #6B8A5C;">
+      <div class="letter">D</div>
+      <div class="name-en">Demographic Pressure</div>
+      <div class="name-th">แรงกดดันประชากร</div>
+      <div class="indicators">aging index · dependency ratio · super-aged % · living alone</div>
+    </div>
+    <div class="dim" style="--dim-color: #3D5C3A;">
+      <div class="letter">A</div>
+      <div class="name-en">Adaptive Capacity</div>
+      <div class="name-th">ความสามารถปรับตัว</div>
+      <div class="indicators">ADL/IADL · digital literacy · financial security · caregiver</div>
+    </div>
+    <div class="dim" style="--dim-color: #2E3B2D;">
+      <div class="letter">R</div>
+      <div class="name-en">Resource Ecosystem</div>
+      <div class="name-th">ระบบนิเวศทรัพยากร</div>
+      <div class="indicators">facilities · NGOs · informal support · age-friendly infra</div>
+    </div>
+  </div>
+</section>
+
+<!-- KPI STRIP -->
+<section class="kpi-strip">
+  <div class="kpi">
+    <div class="label">Total elderly · ผู้สูงอายุ ≥60</div>
+    <div class="value">452,800<span class="unit">คน</span></div>
+    <div class="delta warn">▲ 20.9% of province population</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Super-aged ≥80 · ผู้สูงวัยยิ่ง</div>
+    <div class="value">54,300<span class="unit">คน</span></div>
+    <div class="delta warn">▲ +19% vs 2563</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Aging index · ดัชนีสูงวัย</div>
+    <div class="value">121.6</div>
+    <div class="delta warn">▲ Tipping point crossed</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Districts in critical tier</div>
+    <div class="value">9<span class="unit">/32 อำเภอ</span></div>
+    <div class="delta warn">Priority intervention zones</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Average C-RADAR score</div>
+    <div class="value">57.6<span class="unit">/100</span></div>
+    <div class="delta good">↑ +2.4 vs baseline 2566</div>
+  </div>
+</section>
+
+<!-- ATLAS -->
+<section class="atlas">
+  <div class="panel">
+    <div class="panel-head">
+      <h3><span class="figno">FIG. 01</span>Spatial distribution · การกระจายเชิงพื้นที่</h3>
+      <div class="meta" id="mapMeta">view by composite</div>
+    </div>
+
+    <div class="dim-switcher" id="dimSwitcher">
+      <button data-dim="composite" class="active"><span class="ltr">∑</span>Composite</button>
+      <button data-dim="C"><span class="ltr">C</span>ommunity</button>
+      <button data-dim="R1"><span class="ltr">R</span>isk</button>
+      <button data-dim="A1"><span class="ltr">A</span>ccess</button>
+      <button data-dim="D"><span class="ltr">D</span>emo</button>
+      <button data-dim="A2"><span class="ltr">A</span>dapt</button>
+      <button data-dim="R2"><span class="ltr">R</span>esource</button>
+    </div>
+
+    <div class="map-stage">
+      <svg class="map-svg" viewBox="0 0 600 560" id="mapSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+
+      <svg class="map-compass" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="18" fill="none" stroke="#1F1B17" stroke-width="0.8"/>
+        <path d="M20 4 L23 20 L20 18 L17 20 Z" fill="#1F1B17"/>
+        <path d="M20 36 L23 20 L20 22 L17 20 Z" fill="none" stroke="#1F1B17" stroke-width="0.8"/>
+        <text x="20" y="3" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="6" fill="#1F1B17">N</text>
+      </svg>
+
+      <div class="map-legend">
+        <div class="lg-title" id="legendTitle">Vulnerability index</div>
+        <div class="legend-bar" id="legendBar">
+          <div style="background:#3D5C3A"></div>
+          <div style="background:#6B8A5C"></div>
+          <div style="background:#8A7A3A"></div>
+          <div style="background:#C28A2C"></div>
+          <div style="background:#B8442C"></div>
+        </div>
+        <div class="legend-ticks">
+          <span>low</span><span>mod</span><span>high</span><span>critical</span>
+        </div>
+      </div>
+
+      <div class="map-scale">
+        <div class="scale-bar"></div>
+        <span>0 ─── 40 km</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-stack">
+    <div class="amphoe-card" id="amphoeCard"></div>
+
+    <div class="panel" style="padding-bottom:18px;">
+      <div class="panel-head">
+        <h3><span class="figno">FIG. 02</span>C-RADAR profile · โปรไฟล์เชิงพื้นที่</h3>
+        <div class="meta" id="radarMeta">— vs province avg</div>
+      </div>
+      <div class="radar-stage">
+        <svg class="radar-svg" viewBox="0 0 400 400" id="radarSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <div class="radar-pattern-tag">
+        Identified archetype
+        <strong id="patternName">— กำลังวิเคราะห์ —</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANALYSIS GRID -->
+<section class="analysis-grid">
+  <div class="panel">
+    <div class="panel-head">
+      <h3><span class="figno">FIG. 03</span>District ranking · ลำดับความเปราะบาง</h3>
+      <div class="meta">32 districts · composite score</div>
+    </div>
+    <div class="rank-scroll">
+      <table class="rank-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>อำเภอ District</th>
+            <th class="num">Elderly</th>
+            <th class="num">C-RADAR</th>
+            <th class="num">Profile</th>
+            <th>Tier</th>
+          </tr>
+        </thead>
+        <tbody id="rankBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <h3><span class="figno">FIG. 04</span>Spatial archetypes · รูปแบบเชิงพื้นที่</h3>
+      <div class="meta">rule-based clustering</div>
+    </div>
+    <div class="archetype-list" id="archetypeList"></div>
+  </div>
+</section>
+
+<!-- RESEARCH PATHWAYS -->
+<section class="research-section">
+  <h2>ต่อยอดสู่งานวิจัยที่<em>มี impact</em></h2>
+  <p class="deck">ในจังหวัดที่ใหญ่ที่สุดของประเทศ C-RADAR เปิดโอกาสการวิจัยที่ครอบคลุมทั้ง within-province variation และ cross-boundary clusters ที่นโยบายระดับอำเภอมองไม่เห็น — เหมาะกับ NRCT/บพข., Fogarty และ Hub of Talent</p>
+
+  <div class="pathways">
+    <div class="pathway">
+      <div class="num">01</div>
+      <div class="pw-title">Methods paper</div>
+      <div class="pw-method">VALIDATION · MIXED METHODS</div>
+      <div class="pw-body">พัฒนาและ validate C-RADAR composite index — content validity (Delphi), construct validity (factor analysis), criterion validity เทียบ HDC data — contribution method ที่ตีพิมพ์ได้ใน <em>Health & Place</em>, <em>Soc Sci & Med</em></div>
+      <div class="pw-funder">⤳ NRCT methods grant · Hub of Talent</div>
+    </div>
+
+    <div class="pathway">
+      <div class="num">02</div>
+      <div class="pw-title">Spatial epidemiology</div>
+      <div class="pw-method">GIS · SPATIAL CLUSTER ANALYSIS</div>
+      <div class="pw-body">วิเคราะห์ spatial autocorrelation (Moran's I), hot-spot ของ frailty และ social isolation ข้าม 32 อำเภอ — ระบุ <em>vulnerability clusters</em> ข้ามขอบเขตปกครองในจังหวัดที่ใหญ่ที่สุด</div>
+      <div class="pw-funder">⤳ Fogarty K-award R21 · UKRI Global Health</div>
+    </div>
+
+    <div class="pathway">
+      <div class="num">03</div>
+      <div class="pw-title">Tailored intervention RCT</div>
+      <div class="pw-method">CLUSTER RCT · ARCHETYPE-MATCHED</div>
+      <div class="pw-body">ใช้ archetypes เป็น stratification — ออกแบบ intervention ที่ตรง pattern (befriending สำหรับเมือง, telemedicine สำหรับชนบทห่างไกล) ทดสอบในอำเภอตัวอย่าง · cluster RCT</div>
+      <div class="pw-funder">⤳ NIH R01 · Wellcome Translation</div>
+    </div>
+
+    <div class="pathway">
+      <div class="num">04</div>
+      <div class="pw-title">Digital health scale-up</div>
+      <div class="pw-method">mHEALTH · IMPLEMENTATION SCIENCE</div>
+      <div class="pw-body">พัฒนา C-RADAR-E platform ที่ feed ข้อมูลให้ อสม.และ อปท. — ใช้ RE-AIM วัด reach × effectiveness ข้ามอำเภอที่มี archetype ต่างกัน เชื่อมกับ WeSafe ecosystem</div>
+      <div class="pw-funder">⤳ NIH Fogarty D43 · บพข. AI Health</div>
+    </div>
+  </div>
+</section>
+
+<!-- COLOPHON -->
+<footer class="colophon">
+  <div>
+    <h4>Data & Method</h4>
+    <p>Prototype ใช้ข้อมูล synthetic ที่ calibrate ให้สอดคล้องกับ distribution ของนครราชสีมา (32 อำเภอ 289 ตำบล) จาก HDC, สปสช., สำนักงานสถิติ — สำหรับการพัฒนาจริง จะเชื่อม HDC data lake และ census 2563/2568</p>
+  </div>
+  <div>
+    <h4>Conceptual References</h4>
+    <p>WHO Age-friendly Cities & Communities (2007, updated 2024); WHO ICOPE (Integrated Care for Older People); Diez Roux on neighborhood effects; Glass & McAtee social-biological mesh</p>
+  </div>
+  <div>
+    <h4>Authorship</h4>
+    <p>ผศ.ดร.ทิพย์รัตน์ อุดเมืองเพีย · Hub of Talent for Research on Family Violence Prevention and Response · BCNKK · Praboromarajchanok Institute · 2569</p>
+  </div>
+</footer>
+
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   C-RADAR · Nakhon Ratchasima Province · 32 districts
+   Synthetic data calibrated to Korat aging distribution
+   (x, y) on stylized 600x560 map, geography approximate
+   ───────────────────────────────────────────────────────────── */
+
+const DATA = [
+  // Central / urban core
+  { id: 'nm01', th: 'เมืองนครราชสีมา', en: 'Mueang', x: 300, y: 300, elderly: 62400, pop: 298000, C: 60, R1: 48, A1: 90, D: 50, A2: 66, R2: 84 },
+  { id: 'nm02', th: 'เฉลิมพระเกียรติ', en: 'Chaloem Phrakiat', x: 340, y: 315, elderly: 7200, pop: 34000, C: 64, R1: 54, A1: 76, D: 56, A2: 62, R2: 68 },
+  { id: 'nm03', th: 'ขามทะเลสอ', en: 'Kham Thale So', x: 258, y: 280, elderly: 6100, pop: 28000, C: 66, R1: 56, A1: 74, D: 58, A2: 62, R2: 66 },
+  { id: 'nm04', th: 'โนนสูง', en: 'Non Sung', x: 320, y: 258, elderly: 22400, pop: 105000, C: 68, R1: 54, A1: 70, D: 58, A2: 60, R2: 66 },
+  { id: 'nm05', th: 'จักราช', en: 'Chakkarat', x: 372, y: 300, elderly: 12600, pop: 62000, C: 66, R1: 52, A1: 64, D: 56, A2: 58, R2: 60 },
+
+  // West (mountainous / tourism)
+  { id: 'nm06', th: 'สูงเนิน', en: 'Sung Noen', x: 220, y: 320, elderly: 15800, pop: 78000, C: 66, R1: 54, A1: 66, D: 58, A2: 60, R2: 64 },
+  { id: 'nm07', th: 'สีคิ้ว', en: 'Sikhio', x: 175, y: 300, elderly: 18400, pop: 92000, C: 64, R1: 52, A1: 64, D: 56, A2: 60, R2: 64 },
+  { id: 'nm08', th: 'ปากช่อง', en: 'Pak Chong', x: 120, y: 340, elderly: 28600, pop: 185000, C: 58, R1: 50, A1: 72, D: 54, A2: 64, R2: 72 },
+  { id: 'nm09', th: 'ด่านขุนทด', en: 'Dan Khun Thot', x: 175, y: 235, elderly: 20200, pop: 108000, C: 68, R1: 50, A1: 56, D: 56, A2: 56, R2: 58 },
+  { id: 'nm10', th: 'เทพารักษ์', en: 'Thepharak', x: 140, y: 195, elderly: 6100, pop: 30000, C: 72, R1: 44, A1: 42, D: 54, A2: 50, R2: 48 },
+  { id: 'nm11', th: 'พระทองคำ', en: 'Phra Thong Kham', x: 210, y: 200, elderly: 6400, pop: 30500, C: 70, R1: 48, A1: 50, D: 56, A2: 54, R2: 54 },
+  { id: 'nm12', th: 'สีดา', en: 'Sida', x: 335, y: 130, elderly: 5200, pop: 24000, C: 70, R1: 48, A1: 50, D: 56, A2: 52, R2: 52 },
+
+  // South (national park border)
+  { id: 'nm13', th: 'ปักธงชัย', en: 'Pak Thong Chai', x: 240, y: 375, elderly: 21600, pop: 112000, C: 66, R1: 52, A1: 64, D: 58, A2: 58, R2: 62 },
+  { id: 'nm14', th: 'วังน้ำเขียว', en: 'Wang Nam Khiao', x: 200, y: 430, elderly: 7800, pop: 42000, C: 68, R1: 48, A1: 52, D: 54, A2: 56, R2: 56 },
+  { id: 'nm15', th: 'ครบุรี', en: 'Khon Buri', x: 290, y: 430, elderly: 16800, pop: 90000, C: 68, R1: 50, A1: 56, D: 56, A2: 56, R2: 58 },
+  { id: 'nm16', th: 'เสิงสาง', en: 'Soeng Sang', x: 345, y: 455, elderly: 11400, pop: 66000, C: 70, R1: 48, A1: 48, D: 56, A2: 54, R2: 52 },
+  { id: 'nm17', th: 'โชคชัย', en: 'Chok Chai', x: 320, y: 380, elderly: 13200, pop: 68000, C: 66, R1: 52, A1: 64, D: 58, A2: 58, R2: 62 },
+  { id: 'nm18', th: 'หนองบุญมาก', en: 'Nong Bunmak', x: 360, y: 410, elderly: 9400, pop: 50000, C: 68, R1: 50, A1: 54, D: 56, A2: 54, R2: 56 },
+
+  // East (Phimai / rice plains)
+  { id: 'nm19', th: 'พิมาย', en: 'Phimai', x: 400, y: 240, elderly: 24800, pop: 128000, C: 66, R1: 52, A1: 66, D: 58, A2: 60, R2: 64 },
+  { id: 'nm20', th: 'ห้วยแถลง', en: 'Huai Thalaeng', x: 428, y: 320, elderly: 12200, pop: 62000, C: 68, R1: 50, A1: 56, D: 56, A2: 56, R2: 58 },
+  { id: 'nm21', th: 'ชุมพวง', en: 'Chum Phuang', x: 448, y: 250, elderly: 14600, pop: 74000, C: 68, R1: 50, A1: 54, D: 58, A2: 54, R2: 56 },
+  { id: 'nm22', th: 'เมืองยาง', en: 'Mueang Yang', x: 480, y: 210, elderly: 5400, pop: 26000, C: 70, R1: 46, A1: 44, D: 56, A2: 50, R2: 50 },
+  { id: 'nm23', th: 'ลำทะเมนชัย', en: 'Lam Thamenchai', x: 468, y: 285, elderly: 6200, pop: 31000, C: 72, R1: 46, A1: 42, D: 56, A2: 50, R2: 48 },
+
+  // North (rice belt)
+  { id: 'nm24', th: 'คง', en: 'Khong', x: 300, y: 190, elderly: 15200, pop: 76000, C: 70, R1: 50, A1: 56, D: 58, A2: 56, R2: 58 },
+  { id: 'nm25', th: 'ขามสะแกแสง', en: 'Kham Sakaesaeng', x: 258, y: 210, elderly: 8800, pop: 42000, C: 70, R1: 50, A1: 54, D: 58, A2: 54, R2: 56 },
+  { id: 'nm26', th: 'โนนไทย', en: 'Non Thai', x: 245, y: 250, elderly: 12400, pop: 62000, C: 68, R1: 52, A1: 58, D: 58, A2: 56, R2: 60 },
+  { id: 'nm27', th: 'บัวใหญ่', en: 'Bua Yai', x: 290, y: 140, elderly: 18200, pop: 96000, C: 66, R1: 52, A1: 64, D: 58, A2: 60, R2: 64 },
+  { id: 'nm28', th: 'บัวลาย', en: 'Bua Lai', x: 315, y: 100, elderly: 5000, pop: 23000, C: 72, R1: 46, A1: 46, D: 56, A2: 50, R2: 50 },
+  { id: 'nm29', th: 'บ้านเหลื่อม', en: 'Ban Lueam', x: 250, y: 150, elderly: 5400, pop: 25000, C: 72, R1: 46, A1: 46, D: 56, A2: 50, R2: 50 },
+  { id: 'nm30', th: 'ประทาย', en: 'Prathai', x: 390, y: 160, elderly: 15600, pop: 78000, C: 68, R1: 50, A1: 56, D: 58, A2: 56, R2: 58 },
+  { id: 'nm31', th: 'โนนแดง', en: 'Non Daeng', x: 358, y: 190, elderly: 5600, pop: 26000, C: 70, R1: 48, A1: 50, D: 56, A2: 52, R2: 54 },
+  { id: 'nm32', th: 'แก้งสนามนาง', en: 'Kaeng Sanam Nang', x: 255, y: 105, elderly: 6800, pop: 33000, C: 72, R1: 48, A1: 46, D: 56, A2: 52, R2: 52 },
+];
+
+DATA.forEach(d => {
+  d.composite = Math.round((d.C + d.R1 + d.A1 + d.D + d.A2 + d.R2) / 6);
+  d.tier = d.composite < 50 ? 'critical' : d.composite < 58 ? 'high' : d.composite < 66 ? 'moderate' : 'low';
+});
+
+const PROV = ['C','R1','A1','D','A2','R2'].reduce((a,k) => (a[k] = Math.round(DATA.reduce((s,d)=>s+d[k],0)/DATA.length), a), {});
+
+function colorScale(v) {
+  if (v < 45) return '#B8442C';
+  if (v < 54) return '#C28A2C';
+  if (v < 62) return '#8A7A3A';
+  if (v < 70) return '#6B8A5C';
+  return '#3D5C3A';
+}
+
+const maxElderly = Math.max(...DATA.map(d => d.elderly));
+function radiusScale(elderly) {
+  return 7 + Math.sqrt(elderly / maxElderly) * 20;
+}
+
+const DIM_META = {
+  composite: { name: 'Composite C-RADAR', th: 'ดัชนีรวม', color: '#1F1B17' },
+  C: { name: 'Community Vitality', th: 'ชีวิตชีวาของชุมชน', color: '#B8442C' },
+  R1: { name: 'Risk Burden', th: 'ภาระความเสี่ยง', color: '#C28A2C' },
+  A1: { name: 'Access to Care', th: 'การเข้าถึงบริการ', color: '#8A7A3A' },
+  D: { name: 'Demographic Pressure', th: 'แรงกดดันประชากร', color: '#6B8A5C' },
+  A2: { name: 'Adaptive Capacity', th: 'ความสามารถปรับตัว', color: '#3D5C3A' },
+  R2: { name: 'Resource Ecosystem', th: 'ระบบนิเวศทรัพยากร', color: '#2E3B2D' },
+};
+
+let currentDim = 'composite';
+let selectedId = 'nm01';
+
+const mapSvg = document.getElementById('mapSvg');
+
+function drawMap() {
+  mapSvg.innerHTML = '';
+
+  const frame = `
+    <defs>
+      <pattern id="topo" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="0.4" fill="rgba(31, 27, 23, 0.08)"/>
+      </pattern>
+      <radialGradient id="provinceBg" cx="50%" cy="50%" r="60%">
+        <stop offset="0%" stop-color="rgba(255,255,255,0.4)"/>
+        <stop offset="100%" stop-color="rgba(184, 138, 44, 0.05)"/>
+      </radialGradient>
+    </defs>
+    <path d="M 60 90 Q 90 55, 160 70 Q 230 50, 300 62 Q 380 48, 450 72 Q 520 62, 555 110 Q 570 175, 550 245 Q 565 320, 535 390 Q 555 450, 500 495 Q 430 520, 360 508 Q 290 520, 220 500 Q 150 512, 95 480 Q 55 435, 55 365 Q 40 290, 55 220 Q 38 150, 60 90 Z"
+      fill="url(#provinceBg)" stroke="rgba(31, 27, 23, 0.35)" stroke-width="1.2" stroke-linejoin="round"/>
+    <path d="M 60 90 Q 90 55, 160 70 Q 230 50, 300 62 Q 380 48, 450 72 Q 520 62, 555 110 Q 570 175, 550 245 Q 565 320, 535 390 Q 555 450, 500 495 Q 430 520, 360 508 Q 290 520, 220 500 Q 150 512, 95 480 Q 55 435, 55 365 Q 40 290, 55 220 Q 38 150, 60 90 Z"
+      fill="url(#topo)" stroke="none" opacity="0.6"/>
+    <text x="555" y="52" text-anchor="end" font-family="Fraunces, serif" font-style="italic" font-size="13" fill="rgba(31, 27, 23, 0.4)">Nakhon Ratchasima</text>
+    <text x="555" y="67" text-anchor="end" font-family="Noto Serif Thai, serif" font-size="10" fill="rgba(31, 27, 23, 0.35)">จังหวัดนครราชสีมา · 32 อำเภอ</text>
+  `;
+  mapSvg.insertAdjacentHTML('beforeend', frame);
+
+  const center = DATA.find(d => d.id === 'nm01');
+  DATA.forEach(d => {
+    if (d.id === 'nm01') return;
+    const dist = Math.hypot(d.x - center.x, d.y - center.y);
+    if (dist < 90) {
+      mapSvg.insertAdjacentHTML('beforeend',
+        `<line x1="${center.x}" y1="${center.y}" x2="${d.x}" y2="${d.y}" stroke="rgba(31, 27, 23, 0.07)" stroke-width="0.5" stroke-dasharray="2 3"/>`);
+    }
+  });
+
+  DATA.forEach(d => {
+    const v = d[currentDim] !== undefined ? d[currentDim] : d.composite;
+    const r = radiusScale(d.elderly);
+    const isSelected = d.id === selectedId;
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('class', 'amphoe-node' + (isSelected ? ' selected' : ''));
+    g.setAttribute('transform', `translate(${d.x}, ${d.y})`);
+    g.setAttribute('data-id', d.id);
+
+    if (isSelected) {
+      g.insertAdjacentHTML('beforeend',
+        `<circle r="${r + 7}" fill="none" stroke="${colorScale(v)}" stroke-width="1" stroke-dasharray="3 2" opacity="0.5"/>`);
+    }
+
+    g.insertAdjacentHTML('beforeend',
+      `<circle class="fill" r="${r}" fill="${colorScale(v)}" fill-opacity="0.78"/>`);
+
+    if (r > 13) {
+      g.insertAdjacentHTML('beforeend',
+        `<text y="3" font-family="Fraunces, serif" font-weight="500" font-size="${r * 0.68}" fill="#F6F2E9" text-anchor="middle">${v}</text>`);
+    }
+
+    g.insertAdjacentHTML('beforeend', `<text class="label-bg" y="${r + 10}">${d.th}</text>`);
+    g.insertAdjacentHTML('beforeend', `<text y="${r + 10}">${d.th}</text>`);
+
+    g.addEventListener('click', () => { selectedId = d.id; render(); });
+    mapSvg.appendChild(g);
+  });
+}
+
+const radarSvg = document.getElementById('radarSvg');
+
+function drawRadar() {
+  radarSvg.innerHTML = '';
+  const cx = 200, cy = 200, maxR = 130;
+  const dims = ['C','R1','A1','D','A2','R2'];
+  const labels = {
+    C: { en: 'Community', th: 'ชุมชน', color: '#B8442C' },
+    R1: { en: 'Risk', th: 'ความเสี่ยง', color: '#C28A2C' },
+    A1: { en: 'Access', th: 'การเข้าถึง', color: '#8A7A3A' },
+    D: { en: 'Demo', th: 'ประชากร', color: '#6B8A5C' },
+    A2: { en: 'Adapt', th: 'ปรับตัว', color: '#3D5C3A' },
+    R2: { en: 'Resource', th: 'ทรัพยากร', color: '#2E3B2D' },
+  };
+  const sel = DATA.find(d => d.id === selectedId);
+
+  const gridGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  gridGroup.setAttribute('class', 'radar-grid');
+  for (let pct = 25; pct <= 100; pct += 25) {
+    const r = (maxR * pct) / 100;
+    const points = dims.map((_, i) => {
+      const angle = (i * Math.PI * 2 / 6) - Math.PI / 2;
+      return `${cx + Math.cos(angle) * r},${cy + Math.sin(angle) * r}`;
+    }).join(' ');
+    gridGroup.insertAdjacentHTML('beforeend', `<polygon points="${points}" class="${pct === 100 ? 'outer' : ''}"/>`);
+  }
+  dims.forEach((_, i) => {
+    const angle = (i * Math.PI * 2 / 6) - Math.PI / 2;
+    gridGroup.insertAdjacentHTML('beforeend',
+      `<line x1="${cx}" y1="${cy}" x2="${cx + Math.cos(angle) * maxR}" y2="${cy + Math.sin(angle) * maxR}"/>`);
+  });
+  [25, 50, 75].forEach(t => {
+    const r = (maxR * t) / 100;
+    gridGroup.insertAdjacentHTML('beforeend', `<text class="radar-tick" x="${cx + 3}" y="${cy - r + 3}">${t}</text>`);
+  });
+  radarSvg.appendChild(gridGroup);
+
+  const provPoints = dims.map((k, i) => {
+    const angle = (i * Math.PI * 2 / 6) - Math.PI / 2;
+    const r = (maxR * PROV[k]) / 100;
+    return `${cx + Math.cos(angle) * r},${cy + Math.sin(angle) * r}`;
+  }).join(' ');
+  radarSvg.insertAdjacentHTML('beforeend', `<polygon class="radar-data-compare" points="${provPoints}"/>`);
+
+  const selPointsArr = dims.map((k, i) => {
+    const angle = (i * Math.PI * 2 / 6) - Math.PI / 2;
+    const r = (maxR * sel[k]) / 100;
+    return { x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r, k, val: sel[k] };
+  });
+  radarSvg.insertAdjacentHTML('beforeend', `<polygon class="radar-data" points="${selPointsArr.map(p => `${p.x},${p.y}`).join(' ')}"/>`);
+
+  selPointsArr.forEach(p => {
+    radarSvg.insertAdjacentHTML('beforeend', `<circle class="radar-point" cx="${p.x}" cy="${p.y}" r="4.5" fill="${labels[p.k].color}"/>`);
+    radarSvg.insertAdjacentHTML('beforeend', `<text class="radar-tick" x="${p.x}" y="${p.y - 11}" text-anchor="middle" font-weight="600" fill="#1F1B17" font-size="10">${p.val}</text>`);
+  });
+
+  dims.forEach((k, i) => {
+    const angle = (i * Math.PI * 2 / 6) - Math.PI / 2;
+    const lx = cx + Math.cos(angle) * (maxR + 32);
+    const ly = cy + Math.sin(angle) * (maxR + 32);
+    radarSvg.insertAdjacentHTML('beforeend', `<text class="radar-label" x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" fill="${labels[k].color}">${labels[k].en}</text>`);
+    radarSvg.insertAdjacentHTML('beforeend', `<text class="radar-label-th" x="${lx}" y="${ly + 13}" text-anchor="middle" dominant-baseline="middle">${labels[k].th}</text>`);
+  });
+  radarSvg.insertAdjacentHTML('beforeend', `<circle cx="${cx}" cy="${cy}" r="2" fill="#1F1B17"/>`);
+}
+
+function classifyArchetype(d) {
+  if (d.A1 > 72 && d.C < 64 && d.A2 < 68) return { name: 'ผู้สูงวัยลำพังในเมือง', en: 'Isolated Urban Elderly', color: '#B8442C', key: 'IUE' };
+  if (d.A1 < 55 && d.R2 < 58 && d.C > 68) return { name: 'ชนบทขาดบริการ', en: 'Rural Service Desert', color: '#C28A2C', key: 'RSD' };
+  if (d.D < 58 && d.A2 < 58) return { name: 'บุตรหลานไปทำงาน', en: 'Skipped-Generation', color: '#8A7A3A', key: 'SG' };
+  if (d.composite > 62) return { name: 'ชุมชนเข้มแข็งครบเครื่อง', en: 'Resilient Multi-Gen', color: '#3D5C3A', key: 'RMG' };
+  return { name: 'ผสมหลายรูปแบบ', en: 'Mixed Profile', color: '#6B8A5C', key: 'MIX' };
+}
+
+function drawAmphoeCard() {
+  const d = DATA.find(x => x.id === selectedId);
+  const card = document.getElementById('amphoeCard');
+  const arch = classifyArchetype(d);
+  const elderlyPct = ((d.elderly / d.pop) * 100).toFixed(1);
+
+  card.innerHTML = `
+    <div class="label">District profile · ${d.id.toUpperCase()}</div>
+    <div class="name">อำเภอ${d.th}</div>
+    <div class="name-en">${d.en}</div>
+    <div class="amphoe-stats">
+      <div class="amphoe-stat">
+        <div class="lbl">ผู้สูงอายุ Elderly</div>
+        <div class="val">${d.elderly.toLocaleString()}<span class="small">คน · ${elderlyPct}%</span></div>
+      </div>
+      <div class="amphoe-stat">
+        <div class="lbl">C-RADAR Score</div>
+        <div class="val" style="color:${colorScale(d.composite)}">${d.composite}<span class="small">/100</span></div>
+      </div>
+      <div class="amphoe-stat">
+        <div class="lbl">Tier · ระดับ</div>
+        <div class="val"><span class="tier-pill ${d.tier}">${d.tier}</span></div>
+      </div>
+    </div>
+  `;
+  document.getElementById('patternName').textContent = `${arch.name} · ${arch.en}`;
+  document.getElementById('patternName').style.color = arch.color;
+}
+
+function drawRankTable() {
+  const sorted = [...DATA].sort((a,b) => a.composite - b.composite);
+  const tbody = document.getElementById('rankBody');
+  tbody.innerHTML = sorted.map((d, i) => {
+    const arch = classifyArchetype(d);
+    const isSel = d.id === selectedId;
+    return `
+      <tr class="${isSel ? 'selected' : ''}" data-id="${d.id}">
+        <td class="rank">${(i + 1).toString().padStart(2, '0')}</td>
+        <td class="name-cell">${d.th}</td>
+        <td class="num">${d.elderly.toLocaleString()}</td>
+        <td class="num bar-cell">
+          <div style="display:flex; align-items:center; gap:8px; justify-content:flex-end;">
+            <span>${d.composite}</span>
+            <div class="mini-bar" style="flex:1; max-width:52px;">
+              <div class="fill" style="width:${d.composite}%; background:${colorScale(d.composite)}"></div>
+            </div>
+          </div>
+        </td>
+        <td class="num" style="font-family:'Noto Serif Thai',serif; font-size:11px; color:${arch.color}">${arch.en}</td>
+        <td><span class="tier-pill ${d.tier}">${d.tier}</span></td>
+      </tr>
+    `;
+  }).join('');
+  tbody.querySelectorAll('tr').forEach(tr => {
+    tr.addEventListener('click', () => { selectedId = tr.dataset.id; render(); });
+  });
+}
+
+function drawArchetypes() {
+  const archs = [
+    { key: 'IUE', color: '#B8442C', th: 'ผู้สูงวัยลำพังในเมือง', en: 'Isolated Urban Elderly',
+      desc: 'access ดี แต่ <em>community</em> และ <em>adaptive</em> ต่ำ — ผู้สูงอายุอยู่คนเดียว, ความสัมพันธ์เพื่อนบ้านบาง',
+      action: '→ befriending · digital companion intervention' },
+    { key: 'RSD', color: '#C28A2C', th: 'ชนบทขาดบริการ', en: 'Rural Service Desert',
+      desc: '<em>community</em> เหนียวแน่น แต่ <em>access</em> วิกฤต — ระยะทาง รพช.ไกล, ขาด specialist',
+      action: '→ mobile clinic · telemedicine · อสม.empowerment' },
+    { key: 'SG', color: '#8A7A3A', th: 'บุตรหลานไปทำงาน', en: 'Skipped-Generation',
+      desc: 'วัยลูกย้ายไปทำงานเมือง เหลือผู้สูงอายุดูแลหลาน — <em>demographic</em> กดดัน, double burden',
+      action: '→ family cash transfer · community day-care' },
+    { key: 'RMG', color: '#3D5C3A', th: 'ชุมชนเข้มแข็งครบเครื่อง', en: 'Resilient Multi-Gen',
+      desc: 'ทั้ง 6 มิติบาลานซ์ดี — ครอบครัวขยาย, ชมรมแอ็คทีฟ — <strong>learning sites สำหรับ scale-up</strong>',
+      action: '→ knowledge hub · positive deviance research' },
+  ];
+  const listEl = document.getElementById('archetypeList');
+  listEl.innerHTML = archs.map(a => {
+    const count = DATA.filter(d => classifyArchetype(d).key === a.key).length;
+    const pct = Math.round(count / DATA.length * 100);
+    return `
+      <div class="archetype" style="--arch-color: ${a.color};">
+        <div class="arch-head">
+          <div>
+            <div class="arch-name">${a.th}</div>
+            <div class="arch-name-en">${a.en}</div>
+          </div>
+          <div class="arch-count">n=${count} · ${pct}%</div>
+        </div>
+        <div class="arch-desc">${a.desc}</div>
+        <div class="arch-intervention">${a.action}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+const dimButtons = document.querySelectorAll('#dimSwitcher button');
+dimButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    currentDim = btn.dataset.dim;
+    dimButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const meta = DIM_META[currentDim];
+    document.getElementById('mapMeta').textContent = `view by ${meta.name.toLowerCase()}`;
+    document.getElementById('legendTitle').textContent = meta.name;
+    drawMap();
+  });
+});
+
+function render() {
+  drawMap();
+  drawRadar();
+  drawAmphoeCard();
+  drawRankTable();
+  const sel = DATA.find(d => d.id === selectedId);
+  document.getElementById('radarMeta').textContent = `${sel.th} vs province avg`;
+}
+
+render();
+drawArchetypes();
+
+document.querySelectorAll('.panel, .kpi, .dim').forEach((el, i) => {
+  el.style.animationDelay = (i * 0.03) + 's';
+  el.classList.add('fade-in');
+});
+</script>
+</body>
+</html>
